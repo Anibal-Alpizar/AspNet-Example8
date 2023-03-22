@@ -89,6 +89,15 @@ namespace Infraestructure.Repository
             try
             {
                 //Guardar Orden
+                using (MyContext ctx = new MyContext())
+                {
+                    using (var transaccion = ctx.Database.BeginTransaction())
+                    {
+                        ctx.Orden.Add(pOrden);
+                        resultado = ctx.SaveChanges();
+                        transaccion.Commit();
+                    }
+                }
 
 
                 // Buscar la orden que se salvó y reenviarla

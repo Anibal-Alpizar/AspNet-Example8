@@ -152,13 +152,22 @@ namespace Web.Controllers
                 else
                 {
                     //Obtener datos usuario logueado
-                    
+                    Usuario oUsuario = (Usuario)Session["User"];
+
 
                     //Asignar idUsuario que se encuentra logueado
-                  
+                    orden.IdUsuario = oUsuario.IdUsuario;
 
                     //Agregar cada línea de detalle a la orden
-                   
+                    var listaDetalle = Carrito.Instancia.Items;
+                    foreach (var item in listaDetalle)
+                    {
+                        OrdenDetalle ordenDetalle = new OrdenDetalle();
+                        ordenDetalle.IdLibro = item.IdLibro;
+                        ordenDetalle.Precio = item.Precio;
+                        ordenDetalle.Cantidad = item.Cantidad;
+                        orden.OrdenDetalle.Add(ordenDetalle);
+                    }
 
                 }
                 //Guardar la orden
