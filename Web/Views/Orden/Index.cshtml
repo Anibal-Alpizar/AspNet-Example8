@@ -60,7 +60,7 @@
 @section Scripts {
 
     @Scripts.Render("~/bundles/jqueryval")
-   @* @Scripts.Render("~/bundles/jqueryajax")*@
+    @* @Scripts.Render("~/bundles/jqueryajax")*@
 
     <script type="text/javascript">
 
@@ -97,10 +97,27 @@
                         console.log('Error' + error + ',No Error' + xhr.status);
                     }
                 })
-            }
-        )
+            });
+        $(document).on('click', '.eliminar',
+            function () {
+                var id = $(this).data('id');
+                $.ajax({
+                    method: 'GET',
+                    url: '/Orden/eliminarLibro',
+                    data: { 'idLibro': id },
+                    success: function (response) {
+                        $('#resultadoDetalle').html('');
+                        $('#resultadoDetalle').html(response);
+                        // Actualizar cantidad en el menu
+                        updateCantMenu();
+                    }, error: function (xhr, status, error) {
+                        console.log('Error' + error + ',No Error' + xhr.status);
+                    }
+                })
+            })
 
-                        //Actualizar cantidad de libros en el menú
+
+                            //Actualizar cantidad de libros en el menú
 
     </script>
 }
