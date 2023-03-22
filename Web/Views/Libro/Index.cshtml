@@ -97,5 +97,18 @@
                 }
             })           
         }
+        function comprar(idLibro) {
+            $.ajax({
+                method: 'GET',
+                url: '/Orden/ordenarLibro',
+                data: { 'idLibro': idLibro },
+                success: function (response) {
+                    $('#cantidadLibros').html('');
+                    $('#cantidadLibros').html(response);
+                }, error: function (xhr, status, error) {
+                    console.log('Error' + error + ',No Error' + xhr.status);
+                }
+            })
+        }
     </script>
     }

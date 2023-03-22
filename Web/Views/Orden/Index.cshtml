@@ -36,6 +36,18 @@
     <hr /><span class="glyphicons glyphicons-hand-left"></span>
     <div id="resultadoDetalle">
         @* Detalle Carrito *@
+        @if (Web.Utils.Carrito.Instancia.Items.Count() > 0)
+        {
+            @Html.Partial("~/Views/Orden/_DetalleOrden.cshtml",
+           (List<Web.ViewModel.ViewModelOrdenDetalle>)ViewBag.DetalleOrden
+        )
+        }
+        else
+        {
+            <div class="alert alert-warning align-items-center">
+                La orden no tiene libros asignados
+            </div>
+        }
 
     </div>
     <hr />
@@ -48,15 +60,48 @@
 @section Scripts {
 
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jqueryajax")
+   @* @Scripts.Render("~/bundles/jqueryajax")*@
 
     <script type="text/javascript">
 
+
         //Actualizar cantidad de libros en el carrito
+        function updateCantMenu() {
+            $.ajax({
+                method: 'GET',
+                url: '/Orden/actualizarOrdenCantidad',
+                success: function (response) {
+                    $('#cantidadLibros').html('');
+                    $('#cantidadLibros').html(response);
+                }, error: function (xhr, status, error) {
+                    console.log('Error' + error + ',No Error' + xhr.status);
+                }
+            })
+        }
         //Cambio de cantidad en caja de texto
-        
-        //Actualizar cantidad de libros en el menú
-        
+        $(document).on('change', '.changeCantidad',
+            function () {
+                var txtCantidad = $(this);
+                var cantidad = txtCantidad.val();
+                var id = txtCantidad.data("libroid");
+                $.ajax({
+                    method: 'GET',
+                    url: '/Orden/actualizarCantidad',
+                    data: { 'idLibro': id, "cantidad": cantidad },
+                    success: function (response) {
+                        $('#resultadoDetalle').html('');
+                        $('#resultadoDetalle').html(response);
+                        // Actualizar cantidad en el menu
+                        updateCantMenu();
+                    }, error: function (xhr, status, error) {
+                        console.log('Error' + error + ',No Error' + xhr.status);
+                    }
+                })
+            }
+        )
+
+                        //Actualizar cantidad de libros en el menú
+
     </script>
 }
 

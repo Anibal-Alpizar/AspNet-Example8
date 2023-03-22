@@ -41,37 +41,39 @@ namespace Web.Controllers
         private ActionResult DetalleCarrito()
         {
 
-            return View();
+            return PartialView("_DetalleOrden", Carrito.Instancia.Items);
         }
         //Actualizar cantidad de libros en el carrito
         public ActionResult actualizarCantidad(int idLibro, int cantidad)
         {
-
-
-            return View();
+            ViewBag.DetalleOrden = Carrito.Instancia.Items;
+            TempData["NotiCarrito"] = Carrito.Instancia.SetItemCantidad(idLibro, cantidad);
+            TempData.Keep();
+            return PartialView("_DetalleOrden", Carrito.Instancia.Items);
 
         }
         //Ordenar un libro y agregarlo al carrito
         public ActionResult ordenarLibro(int? idLibro)
         {
-
-
-            return View();
-
+            ViewBag.NotiCarrito = Carrito.Instancia.AgregarItem((int)idLibro);
+            return PartialView("_OrdenCantidad");
         }
 
         //Actualizar solo la cantidad de libros que se muestra en el menú
         public ActionResult actualizarOrdenCantidad()
         {
-
-            return View();
+            if (TempData.ContainsKey("NotiCarrito"))
+            {
+                ViewBag.NotiCarrito = TempData["NotiCarrito"];
+            }
+            return PartialView("_OrdenCantidad");
 
         }
         //Eliminar libro del carrito
         public ActionResult eliminarLibro(int? idLibro)
         {
-
-            return View();
+            ViewBag.NotiCarrito = Carrito.Instancia.EliminarItem((int)idLibro);
+            return PartialView("_DetalleOrden", Carrito.Instancia.Items);
         }
 
 
