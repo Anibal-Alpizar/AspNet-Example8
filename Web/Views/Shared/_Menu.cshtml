@@ -1,0 +1,94 @@
+﻿
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        @Html.ActionLink("Librería", "Index", "Home", null, new { @class = "navbar-brand" })
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    @Html.ActionLink("Libros", "Index", "Libro",
+               null, new { @class = "nav-link" })
+
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mantenimientos</a>
+                    <div class="dropdown-menu">
+                        @*Enlace a la lista de autores*@
+                        @Html.ActionLink("Autores", "Index", "Autor",
+               null, new { @class = "dropdown-item" })
+                        <div class="dropdown-divider"></div>
+                        @if (Web.Security.AutorizeView.IsUserInRole(new string[] { "Administrador", "Procesos" }))
+                        {
+                            @Html.ActionLink("Libro", "IndexAdmin", "Libro", null, new { @class = "dropdown-item" })
+                        }
+
+                        <div class="dropdown-divider"></div>
+                        @Html.ActionLink("Orden", "IndexAdmin", "Orden", null, new { @class = "dropdown-item" })
+
+                    </div>
+                </li>
+                @* Texto Usuario, Accion, Controlador*@
+                <li>
+                    @Html.ActionLink("Acerca de", "About", "Home",
+               null, new { @class = "nav-link" })
+                </li>
+                <li>@Html.ActionLink("Contacto", "Contact", "Home", null, new { @class = "nav-link" })</li>
+                @* Detalle y link Orden *@
+                <li class="nav-item" id="cantidadLibros">
+                    @Html.Partial("_OrdenCantidad")
+                </li>
+                <li class="nav-item dropdown">
+                    @* Información usuario *@
+                    @{
+                        String nombre = "";
+                        String email = "Perfil";
+
+                        if (Session["User"] != null)
+                        {
+                            Infraestructure.Models.Usuario usuario = new Infraestructure.Models.Usuario();
+                            usuario = (Infraestructure.Models.Usuario)Session["User"];
+                            nombre = $"{usuario.Nombre} {usuario.Apellidos}";
+                            email = usuario.Email;
+                        }
+                    }
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                       href="#" role="button" aria-haspopup="true"
+                       aria-expanded="false"><i class="fa-solid fa-user"></i>@email</a>
+
+
+                    <div class="dropdown-menu">
+                        @if (Session["User"] != null)
+                        {
+                            <div class="dropdown-item">
+                                @* Nombre Usuario *@
+                                Usuario: @nombre
+                            </div>
+                        }
+
+                        @if (Session["User"] == null)
+                        {
+                            <a class="dropdown-item"
+                               @*Accion, Controlador*@
+                               href="@Url.Action("Index","Login")">
+                                <i class="fa-solid fa-user-plus"></i>
+                                Login
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-item"
+                               href="@Url.Action("Logout","Login")">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                Logout
+                            </a>
+                        }
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Infraestructure.Models.Orden>
+
+@{
+    ViewBag.Title = "Ordenes";
+}
+
+<h2>Lista de Ordenes registradas</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdOrden)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaOrden)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdOrden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaOrden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Nombre)
+            </td>
+            <td>
+                @Html.ActionLink("Detalle", "Details", new { id = item.IdOrden })
+            </td>
+        </tr>
+    }
+
+</table>
+
+

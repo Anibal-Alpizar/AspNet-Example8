@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LibreriaModelStoreContainer" CdmEntityContainer="LibreriaEntities">
+    <EntitySetMapping Name="Autor">
+      <EntityTypeMapping TypeName="LibreriaModel.Autor">
+        <MappingFragment StoreEntitySet="Autor">
+          <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categoria">
+      <EntityTypeMapping TypeName="LibreriaModel.Categoria">
+        <MappingFragment StoreEntitySet="Categoria">
+          <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cliente">
+      <EntityTypeMapping TypeName="LibreriaModel.Cliente">
+        <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+          <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+          <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Libro">
+      <EntityTypeMapping TypeName="LibreriaModel.Libro">
+        <MappingFragment StoreEntitySet="Libro">
+          <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+          <ScalarProperty Name="Isbn" ColumnName="Isbn" />
+          <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orden">
+      <EntityTypeMapping TypeName="LibreriaModel.Orden">
+        <MappingFragment StoreEntitySet="Orden">
+          <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
+          <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="FechaOrden" ColumnName="FechaOrden" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrdenDetalle">
+      <EntityTypeMapping TypeName="LibreriaModel.OrdenDetalle">
+        <MappingFragment StoreEntitySet="OrdenDetalle">
+          <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
+          <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rol">
+      <EntityTypeMapping TypeName="LibreriaModel.Rol">
+        <MappingFragment StoreEntitySet="Rol">
+          <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="LibreriaModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CategoriaLibro" TypeName="LibreriaModel.CategoriaLibro" StoreEntitySet="CategoriaLibro">
+      <EndProperty Name="Categoria">
+        <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+      </EndProperty>
+      <EndProperty Name="Libro">
+        <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

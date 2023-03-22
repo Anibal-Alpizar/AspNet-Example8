@@ -1,0 +1,64 @@
+﻿@model Infraestructure.Models.Orden
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Orden de Libro</h2>
+@using (Html.BeginForm("Save", "Orden", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdCliente, htmlAttributes: new { @class = "col-form-label " })
+                    <div class="col-md-12">
+                        @Html.DropDownListFor(model => model.IdCliente, (SelectList)ViewBag.idCliente, " Seleccione un cliente ", htmlAttributes: new { @class = "form-select form-control " })
+                        @Html.ValidationMessageFor(model => model.IdCliente, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaOrden, htmlAttributes: new { @class = "col-form-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FechaOrden, htmlAttributes: new { @class = "form-control", @Value = DateTime.Now.ToString("yyyy-MM-dd"), @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.FechaOrden, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <hr /><span class="glyphicons glyphicons-hand-left"></span>
+    <div id="resultadoDetalle">
+        @* Detalle Carrito *@
+
+    </div>
+    <hr />
+    <!-- Submit -->
+    <button type="submit" class="btn btn-success float-right" id="btnOrdenar">
+        <span class="glyphicon  glyphicon-floppy-save"></span>
+        Guardar
+    </button>
+}
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryajax")
+
+    <script type="text/javascript">
+
+        //Actualizar cantidad de libros en el carrito
+        //Cambio de cantidad en caja de texto
+        
+        //Actualizar cantidad de libros en el menú
+        
+    </script>
+}
+
+
+

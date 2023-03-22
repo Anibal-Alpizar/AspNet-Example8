@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Infraestructure.Models.Libro>
+
+@{
+    ViewBag.Title = "Matenimiento Libros";
+}
+
+<h2>Mantenimiento Libros</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Libro")" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Crear</a>
+    @*@Html.ActionLink("Crear", "Create")*@
+</p>
+<div class="row">
+    <div class="col-lg-8">
+
+        <table class="table">
+            <thead>
+                <tr>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Precio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cantidad)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="resultado">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Precio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cantidad)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Libro", new { id = item.IdLibro })" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Editar</a>
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.IdLibro }) |*@
+                            <a href="@Url.Action("Details", "Libro", new { id = item.IdLibro })" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i> Detalle</a>
+                            @*@Html.ActionLink("Details", "Details", new { id = item.IdLibro }) |*@
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <div class="col-md-4">
+        <div class="card my-4">
+            <h5 class="card-header">Buscar Libro por nombre</h5>
+            
+            <div class="card-body">
+                <div class="input-group">
+                    @Html.TextBox("filtro","", new { @class="form-control"})
+                    <button type="button" id="btnBuscar" class="btn btn-secondary">Buscar</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            @*@Html.Raw(Json.Encode(ViewBag.listaNombres));*@
+            let lista = @Html.Raw(Json.Encode(ViewBag.listaNombres));
+            $("#filtro").autocomplete({
+                source:lista
+                })
+        })
+        $("#btnBuscar").click(function () {
+            var filtro = $("#filtro").val();
+            $.ajax({
+                method: 'POST',
+                url: '/Libro/librosxNombre',
+                data: { 'filtro': filtro },
+                success: function (response) {
+                    $('#resultado').html('');
+                    $('#resultado').html(response);
+                }, error: function (xhr, status, error) {
+                    console.log('Error' + error + ',No Error' + xhr.status);
+                }
+            })
+        })
+    </script>
+    }
+
+

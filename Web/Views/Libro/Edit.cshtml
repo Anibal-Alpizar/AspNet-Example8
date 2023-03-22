@@ -1,0 +1,104 @@
+﻿@model Infraestructure.Models.Libro
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar</h2>
+
+
+@using (Html.BeginForm("Save","Libro",FormMethod.Post, new {enctype="multipart/form-data"} ))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Libro</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.IdLibro)
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Isbn, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Isbn, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Isbn, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Autor, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("IdAutor", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Precio, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">&cent;</span>
+                        @Html.EditorFor(model => model.Precio, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    
+                    @Html.ValidationMessageFor(model => model.Precio, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Cantidad, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Categoria, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("selectedCategorias",
+           (MultiSelectList)ViewBag.idCategoria,
+           htmlAttributes: new { @class = "form-control", multiple = "multiple" })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="image"
+                   src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.Imagen)"
+                   id="ImagenProducto"
+                   style="height:75px;width:75px" />
+            @Html.HiddenFor(model => model.Imagen)
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <div class="btn-group" role="group">
+            <input type="submit" value="Guardar" class="btn btn-success" />
+            @Html.ActionLink("Regresar al listado", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

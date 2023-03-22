@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LibreriaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Autor">
+    <Key>
+      <PropertyRef Name="IdAutor" />
+    </Key>
+    <Property Name="IdAutor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="70" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categoria">
+    <Key>
+      <PropertyRef Name="IdCategoria" />
+    </Key>
+    <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoriaLibro">
+    <Key>
+      <PropertyRef Name="IdCategoria" />
+      <PropertyRef Name="IdLibro" />
+    </Key>
+    <Property Name="IdCategoria" Type="int" Nullable="false" />
+    <Property Name="IdLibro" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="char" MaxLength="15" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Apellido1" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Apellido2" Type="varchar" MaxLength="20" />
+    <Property Name="Sexo" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Libro">
+    <Key>
+      <PropertyRef Name="IdLibro" />
+    </Key>
+    <Property Name="IdLibro" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Isbn" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="IdAutor" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Precio" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="Imagen" Type="varbinary(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orden">
+    <Key>
+      <PropertyRef Name="IdOrden" />
+    </Key>
+    <Property Name="IdOrden" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdCliente" Type="char" MaxLength="15" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="FechaOrden" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrdenDetalle">
+    <Key>
+      <PropertyRef Name="IdOrden" />
+      <PropertyRef Name="IdLibro" />
+    </Key>
+    <Property Name="IdOrden" Type="int" Nullable="false" />
+    <Property Name="IdLibro" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="Precio" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="IdRol" Type="int" Nullable="false" />
+    <Property Name="Password" Type="char" MaxLength="50" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Apellidos" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CategoriaLibro_Categoria">
+    <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+    <End Role="CategoriaLibro" Type="Self.CategoriaLibro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="IdCategoria" />
+      </Principal>
+      <Dependent Role="CategoriaLibro">
+        <PropertyRef Name="IdCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CategoriaLibro_Libro">
+    <End Role="Libro" Type="Self.Libro" Multiplicity="1" />
+    <End Role="CategoriaLibro" Type="Self.CategoriaLibro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Libro">
+        <PropertyRef Name="IdLibro" />
+      </Principal>
+      <Dependent Role="CategoriaLibro">
+        <PropertyRef Name="IdLibro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Libro_Autor">
+    <End Role="Autor" Type="Self.Autor" Multiplicity="1" />
+    <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Autor">
+        <PropertyRef Name="IdAutor" />
+      </Principal>
+      <Dependent Role="Libro">
+        <PropertyRef Name="IdAutor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orden_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orden_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdenDetalle_Libro">
+    <End Role="Libro" Type="Self.Libro" Multiplicity="1" />
+    <End Role="OrdenDetalle" Type="Self.OrdenDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Libro">
+        <PropertyRef Name="IdLibro" />
+      </Principal>
+      <Dependent Role="OrdenDetalle">
+        <PropertyRef Name="IdLibro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdenDetalle_Orden">
+    <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+    <End Role="OrdenDetalle" Type="Self.OrdenDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orden">
+        <PropertyRef Name="IdOrden" />
+      </Principal>
+      <Dependent Role="OrdenDetalle">
+        <PropertyRef Name="IdOrden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LibreriaModelStoreContainer">
+    <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CategoriaLibro" EntityType="Self.CategoriaLibro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orden" EntityType="Self.Orden" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrdenDetalle" EntityType="Self.OrdenDetalle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CategoriaLibro_Categoria" Association="Self.FK_CategoriaLibro_Categoria">
+      <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="CategoriaLibro" EntitySet="CategoriaLibro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CategoriaLibro_Libro" Association="Self.FK_CategoriaLibro_Libro">
+      <End Role="Libro" EntitySet="Libro" />
+      <End Role="CategoriaLibro" EntitySet="CategoriaLibro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Libro_Autor" Association="Self.FK_Libro_Autor">
+      <End Role="Autor" EntitySet="Autor" />
+      <End Role="Libro" EntitySet="Libro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orden_Cliente" Association="Self.FK_Orden_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Orden" EntitySet="Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orden_Usuario" Association="Self.FK_Orden_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Orden" EntitySet="Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdenDetalle_Libro" Association="Self.FK_OrdenDetalle_Libro">
+      <End Role="Libro" EntitySet="Libro" />
+      <End Role="OrdenDetalle" EntitySet="OrdenDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdenDetalle_Orden" Association="Self.FK_OrdenDetalle_Orden">
+      <End Role="Orden" EntitySet="Orden" />
+      <End Role="OrdenDetalle" EntitySet="OrdenDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

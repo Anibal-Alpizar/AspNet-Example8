@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<form>
+    <div class="form-group row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+            <input type="text" readonly="" class="form-control-plaintext" id="staticEmail" value="email@example.com">
+            @Html.TextBox("email","", new { @class = "form-control", @placeholder="Email" })
+        <div class="form-check">
+            @Html.CheckBox("estado", false,new { @class = "form-check-input"})
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                Aceptar término
+            </label>
+        </div>
+             
+        </div>
+    </div>
+</form>
+
+<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+
+<address>
+    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>

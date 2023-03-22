@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LibreriaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Autor">
+    <Key>
+      <PropertyRef Name="IdAutor" />
+    </Key>
+    <Property Name="IdAutor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Libro" Relationship="Self.FK_Libro_Autor" FromRole="Autor" ToRole="Libro" />
+  </EntityType>
+  <EntityType Name="Categoria">
+    <Key>
+      <PropertyRef Name="IdCategoria" />
+    </Key>
+    <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Libro" Relationship="Self.CategoriaLibro" FromRole="Categoria" ToRole="Libro" />
+  </EntityType>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Orden" Relationship="Self.FK_Orden_Cliente" FromRole="Cliente" ToRole="Orden" />
+  </EntityType>
+  <EntityType Name="Libro">
+    <Key>
+      <PropertyRef Name="IdLibro" />
+    </Key>
+    <Property Name="IdLibro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Isbn" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdAutor" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Precio" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <NavigationProperty Name="Autor" Relationship="Self.FK_Libro_Autor" FromRole="Libro" ToRole="Autor" />
+    <NavigationProperty Name="OrdenDetalle" Relationship="Self.FK_OrdenDetalle_Libro" FromRole="Libro" ToRole="OrdenDetalle" />
+    <NavigationProperty Name="Categoria" Relationship="Self.CategoriaLibro" FromRole="Libro" ToRole="Categoria" />
+  </EntityType>
+  <EntityType Name="Orden">
+    <Key>
+      <PropertyRef Name="IdOrden" />
+    </Key>
+    <Property Name="IdOrden" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdCliente" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+    <Property Name="FechaOrden" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK_Orden_Cliente" FromRole="Orden" ToRole="Cliente" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Orden_Usuario" FromRole="Orden" ToRole="Usuario" />
+    <NavigationProperty Name="OrdenDetalle" Relationship="Self.FK_OrdenDetalle_Orden" FromRole="Orden" ToRole="OrdenDetalle" />
+  </EntityType>
+  <EntityType Name="OrdenDetalle">
+    <Key>
+      <PropertyRef Name="IdOrden" />
+      <PropertyRef Name="IdLibro" />
+    </Key>
+    <Property Name="IdOrden" Type="Int32" Nullable="false" />
+    <Property Name="IdLibro" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="Precio" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <NavigationProperty Name="Libro" Relationship="Self.FK_OrdenDetalle_Libro" FromRole="OrdenDetalle" ToRole="Libro" />
+    <NavigationProperty Name="Orden" Relationship="Self.FK_OrdenDetalle_Orden" FromRole="OrdenDetalle" ToRole="Orden" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdRol" Type="Int32" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Orden" Relationship="Self.FK_Orden_Usuario" FromRole="Usuario" ToRole="Orden" />
+    <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
+  </EntityType>
+  <Association Name="FK_Libro_Autor">
+    <End Role="Autor" Type="Self.Autor" Multiplicity="1" />
+    <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Autor">
+        <PropertyRef Name="IdAutor" />
+      </Principal>
+      <Dependent Role="Libro">
+        <PropertyRef Name="IdAutor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orden_Cliente">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdenDetalle_Libro">
+    <End Role="Libro" Type="Self.Libro" Multiplicity="1" />
+    <End Role="OrdenDetalle" Type="Self.OrdenDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Libro">
+        <PropertyRef Name="IdLibro" />
+      </Principal>
+      <Dependent Role="OrdenDetalle">
+        <PropertyRef Name="IdLibro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orden_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Orden">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrdenDetalle_Orden">
+    <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
+    <End Role="OrdenDetalle" Type="Self.OrdenDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orden">
+        <PropertyRef Name="IdOrden" />
+      </Principal>
+      <Dependent Role="OrdenDetalle">
+        <PropertyRef Name="IdOrden" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CategoriaLibro">
+    <End Role="Categoria" Type="Self.Categoria" Multiplicity="*" />
+    <End Role="Libro" Type="Self.Libro" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="LibreriaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Autor" EntityType="Self.Autor" />
+    <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="Libro" EntityType="Self.Libro" />
+    <EntitySet Name="Orden" EntityType="Self.Orden" />
+    <EntitySet Name="OrdenDetalle" EntityType="Self.OrdenDetalle" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK_Libro_Autor" Association="Self.FK_Libro_Autor">
+      <End Role="Autor" EntitySet="Autor" />
+      <End Role="Libro" EntitySet="Libro" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orden_Cliente" Association="Self.FK_Orden_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Orden" EntitySet="Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdenDetalle_Libro" Association="Self.FK_OrdenDetalle_Libro">
+      <End Role="Libro" EntitySet="Libro" />
+      <End Role="OrdenDetalle" EntitySet="OrdenDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orden_Usuario" Association="Self.FK_Orden_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Orden" EntitySet="Orden" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrdenDetalle_Orden" Association="Self.FK_OrdenDetalle_Orden">
+      <End Role="Orden" EntitySet="Orden" />
+      <End Role="OrdenDetalle" EntitySet="OrdenDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="CategoriaLibro" Association="Self.CategoriaLibro">
+      <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="Libro" EntitySet="Libro" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

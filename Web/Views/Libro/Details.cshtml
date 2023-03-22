@@ -1,0 +1,53 @@
+﻿@model Infraestructure.Models.Libro
+
+@{
+    ViewBag.Title = "Detalle Libro";
+}
+
+<h2>Detalle Libro</h2>
+
+<div>
+    <h4>Libro</h4>
+    <hr />
+
+    <div class="row row-cols-2 g-3">
+        <div class="col">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.Imagen)"
+                             alt="Libro @Html.DisplayFor(model => model.Nombre)"
+                             class="img-fluid rounded-start" />                      
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <span class="card-title" style="font-size: 25px; font-weight: 500; line-height: 1.2">@Html.DisplayFor(model => model.Nombre)</span>
+                            <p class="card-text" style="color: #E45641; font-weight: 500;">
+                                @Html.DisplayFor(model => model.Precio)
+                            </p>
+                            <p class="card-text">
+                                <i class="fa-solid fa-box"> </i> <b>@Html.DisplayNameFor(model => model.Cantidad):</b>  @Html.DisplayFor(model => model.Cantidad)
+                            </p>
+                            <p class="card-text">
+                                <i class="fa-solid fa-circle-user"></i> <b>@Html.DisplayNameFor(model => model.Autor):</b>    @Html.DisplayFor(model => model.Autor.Nombre)
+                            </p>
+                            <p class="card-text">
+                                <i class="fa-solid fa-bookmark"></i> <b>@Html.DisplayNameFor(model => model.Categoria):</b>
+                                <ul>
+                                    @foreach (var c in Model.Categoria)
+                                    {
+                                        <li>@c.Nombre</li>
+                                    }
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+     
+<div>
+    @Html.ActionLink("Regresar al listado", "Index", null, new { @class = "btn btn-secondary" })
+</div>

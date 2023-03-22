@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d7d3d253a4b841f79c594a27a6f35103" Name="Diagram1">
+        <EntityTypeShape EntityType="LibreriaModel.Autor" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibreriaModel.Categoria" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibreriaModel.Cliente" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibreriaModel.Libro" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibreriaModel.Orden" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibreriaModel.OrdenDetalle" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibreriaModel.Rol" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibreriaModel.Usuario" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="LibreriaModel.FK_Libro_Autor" ManuallyRouted="false" />
+        <AssociationConnector Association="LibreriaModel.FK_Orden_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="LibreriaModel.FK_OrdenDetalle_Libro" ManuallyRouted="false" />
+        <AssociationConnector Association="LibreriaModel.FK_Orden_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="LibreriaModel.FK_OrdenDetalle_Orden" ManuallyRouted="false" />
+        <AssociationConnector Association="LibreriaModel.FK_Usuario_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="LibreriaModel.CategoriaLibro" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

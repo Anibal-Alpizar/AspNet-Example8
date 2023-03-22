@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Infraestructure.Models.Libro>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Precio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cantidad)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", "Libro", new { id = item.IdLibro })" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Editar</a>
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.IdLibro }) |*@
+            <a href="@Url.Action("Details", "Libro", new { id = item.IdLibro })" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i> Detalle</a>
+            @*@Html.ActionLink("Details", "Details", new { id = item.IdLibro }) |*@
+
+        </td>
+    </tr>
+}
